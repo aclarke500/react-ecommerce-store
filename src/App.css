@@ -1,0 +1,317 @@
+/* Navbar container */
+.navbar {
+  position: fixed;
+  /* Fix the navbar at the top */
+  top: 0;
+  /* Align it to the top */
+  left: 0;
+  /* Align it to the left */
+  width: 100%;
+  /* Span the entire page */
+  display: flex;
+  /* Use Flexbox for alignment */
+  justify-content: center;
+  /* Center the links horizontally */
+  align-items: center;
+  /* Center the links vertically */
+  background-color: #333;
+  /* Dark background */
+  padding: 1rem 0;
+  /* Add vertical padding for spacing */
+  z-index: 1000;
+  /* Ensure it stays above other content */
+}
+
+/* Links in the navbar */
+.nav-link {
+  color: white;
+  /* White text */
+  text-decoration: none;
+  /* Remove underline */
+  font-size: 1.2rem;
+  /* Adjust font size */
+  margin: 0 1rem;
+  /* Spacing between links */
+  padding: 0.5rem 1rem;
+  /* Add padding for hover effect */
+  border-radius: 5px;
+  /* Rounded corners for hover effect */
+  transition: background-color 0.3s ease;
+  /* Smooth hover transition */
+}
+
+/* Hover effect for links */
+.nav-link:hover {
+  background-color: #555;
+  /* Slightly lighter background on hover */
+  color: #fff;
+  /* Keep text white */
+}
+
+/* Add some top margin for the content below the navbar */
+body {
+  margin-top: 4rem;
+  /* Adjust this if the navbar height changes */
+}
+
+/* Product Card */
+.product-card {
+  display: flex;
+  /* Use flexbox to align content inside the card */
+  flex-direction: column;
+  /* Stack content vertically */
+  justify-content: center;
+  /* Center content vertically */
+  align-items: center;
+  /* Center content horizontally */
+  border: 1px solid blue;
+  /* Card border */
+  text-align: center;
+  /* Center text */
+  padding: 16px;
+  /* Inner spacing */
+  border-radius: 8px;
+  /* Rounded corners */
+  width: 200px;
+  /* Uniform card width */
+  height: 250px;
+  /* Uniform card height */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  margin: 8px;
+  /* Space around each card */
+  transition: transform 0.2s ease;
+  /* Smooth hover effect */
+}
+
+/* Hover effect for Product Card */
+.product-card:hover {
+  transform: scale(1.05);
+  /* Slight zoom on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  /* Stronger shadow on hover */
+}
+
+/* Product Container */
+.product-container {
+  display: flex;
+  /* Use flexbox for layout */
+  flex-wrap: wrap;
+  /* Wrap items to the next line if necessary */
+  justify-content: space-evenly;
+  /* Space cards evenly */
+  align-items: flex-start;
+  /* Align items to the top */
+  gap: 16px;
+  /* Consistent spacing between items */
+  padding: 16px;
+  /* Space around the container */
+  width: 100%;
+  /* Full container width */
+  box-sizing: border-box;
+  /* Include padding in width/height calculations */
+}
+
+/* Product Shop */
+.product-shop {
+  display: flex;
+  /* Use flexbox */
+  flex-direction: column;
+  /* Stack title and container */
+  align-items: center;
+  /* Center content horizontally */
+  width: 100%;
+  /* Full width */
+  min-height: 100vh;
+  /* Full page height */
+  padding: 16px;
+  /* Space around the shop */
+  box-sizing: border-box;
+}
+/* Product Details Page */
+.product-details-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px saddlebrown solid;
+  box-sizing: border-box;
+}
+
+
+/* Product Display h1 and h2 */
+.product-display h1,
+.product-display h2 {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+/* Product Image */
+.product-display img {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15%;
+  display: block;
+  transform: scale(0.9);
+}
+
+/* Product Display */
+.product-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 5;
+  margin: 2rem;
+  width: 70%;
+  height: 70%;
+  padding-top: 2rem;
+}
+
+/* Product Meta Data */
+.product-meta-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3rem;
+  flex: 3;
+}
+
+/* Product Display Container */
+.product-display-container {
+  border: 1px solid white;
+  width: 80vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.add-to-cart-button{
+  background-color:rgb(32 31 31);
+  border: 1px solid #ae5a5a;
+}
+
+
+
+.quantity-select{
+  margin: 1rem;
+  width: 8rem;
+  height: 2rem;
+  background-color:rgb(32 31 31);
+  border: 1px solid #ae5a5a;
+  /* border-radius: 5%; */
+}
+
+/* CART PAGE */
+/* Cart Page */
+.cart-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 2rem;
+  background-color: black;
+  color: white;
+  box-sizing: border-box;
+}
+
+/* Cart Header */
+.cart-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Cart Items List */
+.cart-items {
+  width: 80%;
+  max-width: 1200px;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Cart Items */
+.cart-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+  padding: 1rem 0;
+  font-size: 1rem;
+  color: white;
+}
+
+.cart-items li:last-child {
+  border-bottom: none;
+}
+
+/* Cart Item Name */
+.cart-item-name {
+  font-weight: bold;
+  flex: 2;
+  text-align: center;
+}
+
+/* Cart Item Details */
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+/* Cart Item Button */
+.cart-items button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cart-items button:hover, .quantity-select:hover {
+  background-color: #ff4b4b;
+}
+
+/* Cart Total */
+.cart-total {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  width: 80%;
+  max-width: 1200px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cart-items li {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cart-item-details {
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .cart-total {
+    text-align: center;
+  }
+}
+
