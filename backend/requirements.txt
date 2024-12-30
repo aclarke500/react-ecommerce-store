@@ -1,0 +1,9 @@
+lancedb
+sentence_transformers
+numpy
+python-dotenv
+openai
+rich
+pyfiglet
+torch
+pandas
