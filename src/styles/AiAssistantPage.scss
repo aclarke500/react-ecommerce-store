@@ -1,0 +1,79 @@
+.content-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;
+}
+
+
+
+
+.ai-container {
+    width: 40%;
+    height: 60%;
+    background-color: #1a1a1a; /* Slightly lighter than pure black */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20%;
+}
+
+
+.centered-flex-cell{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heading,h1,h2{
+    margin: 0;
+    padding: 0;
+}
+
+.description{
+    text-align: center;
+    margin: 0 3rem;
+}
+
+input{
+padding: 10px;
+border: none;
+border-radius: 5px;
+}
+
+button{
+
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3a3a3a; /* Lighter grey for dark mode aesthetic */
+
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3; /* Darker blue for hover effect */
+    }
+
+    &:active {
+        background-color: #004494; /* Even darker blue for active effect */
+    }
+}
+
+
+.product-list {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Add spacing between items */
+    width: 100%; /* Take up the full width */
+    height: 100%; /* Take up the full height */
+    padding: 20px; /* Add padding */
+    box-sizing: border-box; /* Include padding in the dimensions */
+    background-color: #1a1a1a; /* Optional: background for visibility */
+}

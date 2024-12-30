@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import CartPage from './pages/CartPage';
+import AiAssistantPage from './pages/AiAssistantPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/ai-assistant" element={<AiAssistantPage />} />
         </Routes>
       </Router>
     </ProductProvider>

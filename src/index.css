@@ -25,9 +25,10 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column; /* Stack content */
+  min-height: 100vh; /* Full viewport height */
+  width: 100%; /* Full width */
+  background-color: #242424; /* Dark background */
 }
 
 h1 {

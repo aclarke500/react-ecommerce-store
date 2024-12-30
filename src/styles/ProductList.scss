@@ -1,0 +1,66 @@
+.product-list-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    /* Full width of the parent */
+    height: 100%;
+    padding: 0;
+    /* Remove any padding */
+    margin: 0;
+    /* Remove any margin */
+    box-sizing: border-box;
+    /* Include border and padding in width */
+}
+
+.product, .product-header {
+    display: flex;
+    border-radius: 10px;
+    flex-direction: row;
+    flex: 1;
+    width: 100%;
+    /* Full width of the parent container */
+    // border: 1px solid green; /* Debug border */
+    padding: 10px 0;
+    /* Optional: Add vertical spacing */
+    justify-content: space-between;
+    /* Align name, price, and description */
+    .name,
+    .price,
+    .description{
+        flex: 1;
+    }
+    h3{
+        margin: 0;
+    }
+    .cell{
+        // border: 1px solid red;
+    }
+}
+
+.product:hover {
+    background-color: #4b4b4b;
+    border-radius: 10px;
+    transition: background-color 0.5s ease, border-radius 0.5s ease;
+}
+
+.product h2,
+.product p {
+    margin: 0;
+    /* Remove default margin */
+    padding: 0;
+    /* Remove default padding */
+    flex: 1;
+    /* Allow content to grow evenly */
+}
+
+.product-list-title{
+    font-size: 2rem;
+    color: #ccc;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px solid #8e8e8e;
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
