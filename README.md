@@ -29,9 +29,9 @@ A full-stack application for the RAG General Store that leverages a React-based 
 
 ### 1. Backend Setup
 1. Navigate to the \`backend\` directory:
-   \`\`\`bash
+   ```bash
    cd backend
-   \`\`\`
+    ```
 2. Create a virtual environment and install dependencies:
    \`\`\`bash
    python -m venv venv
