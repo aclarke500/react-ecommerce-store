@@ -137,7 +137,30 @@ def get_all_products():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/products/<category>', methods=['GET'])
+def get_products_by_category(category):
+    try:
+        all_products = []
+        # Get all table names in the database
+        table_names = db.table_names()
+        if category not in table_names:
+            return jsonify({"error": f"Category {category} not found in {table_names}"}), 404
+        for name in table_names:
+            if name == category:
+                table = db.open_table(name)
+                df = table.to_pandas()
+                for _, row in df.iterrows():
+                    product = row_to_product(row, name)
+                    all_products.append(product)
+        return jsonify(all_products), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # Run the Flask app
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000)) # Use the PORT environment variable if it exists
-    app.run(host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 10000)) # Use the PORT environment variable if it exists
+    dev = os.environ.get("DEV", False)
+    app.run(host=os.getenv('HOST'), port=port, debug=bool(dev))
