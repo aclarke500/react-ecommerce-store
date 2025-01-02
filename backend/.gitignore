@@ -92,6 +92,10 @@ celerybeat-schedule
 
 
 photos/
+
+# dont add the db
+general_store_db/ 
+
 # Environments
 .env
 .venv
