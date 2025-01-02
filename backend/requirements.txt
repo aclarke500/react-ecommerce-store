@@ -6,4 +6,8 @@ openai
 rich
 pyfiglet
 torch
+flask
+flask-cors
 pandas
+lancedb
+gunicorn  # If you plan to deploy on services like Render
