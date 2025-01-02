@@ -20,7 +20,7 @@ db = lancedb.connect("./general_store_db")
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Display ASCII art at startup
-display_ascii_art()
+# display_ascii_art()
 @app.route('/query', methods=['POST'])
 def query():
     try:
