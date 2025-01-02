@@ -2,9 +2,11 @@ import ProductCard from '../components/ProductCard'
 // import { useProducts } from '../store/ProductContext';
 import {useState, useEffect} from 'react'
 import { getAllProducts } from '../backend/product';
+import { useParams } from 'react-router-dom';
 import '../styles/ShopPage.scss'
 
 export default function ShopPage() {
+    const {tableName} = useParams();
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
 
