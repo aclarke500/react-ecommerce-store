@@ -98,14 +98,10 @@ def get_product_by_id(product_id):
 
 IMAGE_DIR = "photos"
 # Valid range for product images
-MIN_K = 40
-MAX_K = 97
+
 @app.route('/product_image/<int:product_id>', methods=['GET'])
 def serve_product_image(product_id):
     try:
-        # Adjust product_id to be within range if it's not
-        if product_id < MIN_K or product_id > MAX_K:
-            product_id = random.randint(MIN_K, MAX_K)
         
         # Construct the file path
         file_path = os.path.join(IMAGE_DIR, f"product_{product_id}.png")
