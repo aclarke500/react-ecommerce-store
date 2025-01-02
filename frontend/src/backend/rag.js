@@ -1,7 +1,11 @@
-
+/**
+ * Queries the RAG to get the most relevant products
+ * Returns sample data w/o backend call if query is 'hi' or 'test'.
+ * @param {String} query What the user entered into the search bar
+ * @returns {Array<Products>} The most relevant products based on the users query
+ */
 export async function queryRAG(query){
     if (query == 'hi' || query =='est') return test;
-
 
 
     const url = "http://127.0.0.1:5001/query";
@@ -18,11 +22,10 @@ export async function queryRAG(query){
     }
 
     const data = await response.json();
-    // console.log(data);
     return data;
 }
 
-
+// sample data
 const test = [
     {
       "availability": true,
