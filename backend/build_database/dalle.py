@@ -40,7 +40,7 @@ def build_urls(products: list[dict]):
     
     for p in products:
         try:
-            if int(p['id']) <=39:
+            if int(p['id']) <= 228:
                 continue
             product_ids.append(p['id'])
             p_name = p['name']

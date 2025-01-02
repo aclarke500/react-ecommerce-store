@@ -11,7 +11,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const open = (category)=>{
       navigate(`/shop/${category.tableName}`)
-    }
+  }
   const openAiPage = ()=>{
       navigate('/ai-assistant/');
   }
