@@ -8,7 +8,7 @@ import random
 import os
 from build_database.build_vector_db import build_db 
 
-build_db() # setup the database
+# build_db() # setup the database
 
 # Initialize Flask app
 app = Flask(__name__)
