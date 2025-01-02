@@ -19,7 +19,7 @@ export default function ProductList(props){
         {props.products.map((product, index) => (
 
             <div key={index} className="product"
-                onClick={()=>{openProduct({id:1})}}
+                onClick={()=>{openProduct(product)}}
             >
                 <h3 className='name cell'>{product.name}</h3>
                 <p className='price cell'>${product.price}</p>
