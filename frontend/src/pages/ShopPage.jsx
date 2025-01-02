@@ -1,11 +1,30 @@
 import ProductCard from '../components/ProductCard'
-import { useProducts } from '../store/ProductContext';
-function ShopPage() {
+// import { useProducts } from '../store/ProductContext';
+import {useState, useEffect} from 'react'
+import { getAllProducts } from '../backend/product';
+import '../styles/ShopPage.scss'
 
-const products = useProducts();
+export default function ShopPage() {
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null);
 
-    return <div className="product-shop">
-        <h1>Shop Products</h1>
+    useEffect(() => {
+        async function fetchProducts() {
+            try {
+                const fetchedProducts = await getAllProducts();
+                setProducts(fetchedProducts);
+            } catch (err) {
+                console.error("Error fetching products:", err);
+                setError(err.message);
+            }
+        }
+
+        fetchProducts();
+    }, []); // Empty dependency array to run only once
+
+
+    return <div className="shop-page">
+        <h1 className='title'> Shop Products</h1>
         <div className="product-container">
             {products.map((product, index) => (
                 <ProductCard key={index} product={product} />
@@ -14,5 +33,3 @@ const products = useProducts();
     </div>
 
 }
-
-export default ShopPage;

@@ -6,11 +6,12 @@ import pandas as pd
 model = SentenceTransformer('all-MPNet-base-v2')
 temp_img_df = pd.read_csv('build_database/temp.csv')
 def get_img_url(id):
-    print("ahhh",temp_img_df.columns)
-    url = temp_img_df.loc[temp_img_df[' product_id'] == id, 'product_img_url'].values
-    if len(url) == 0: # If the image URL is not found, return a default image
-        return "https://oaidalleapiprodscus.blob.core.windows.net/private/org-GMnbtRP4ficn3DyHiO8HT2Ou/user-uBxP2K66QnLbLi7g9cnyXmw2/img-TLEVdVMIcKMwa5xCaRAp0WCs.png?st=2025-01-02T01%3A52%3A04Z&se=2025-01-02T03%3A52%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-01-02T01%3A28%3A35Z&ske=2025-01-03T01%3A28%3A35Z&sks=b&skv=2024-08-04&sig=CIyBbjhvuKd1OcWdZ5AcTJDHFx3tWbsa%2BoWAI8of8ro%3D"
-    return url[0]
+    return "https://oaidalleapiprodscus.blob.core.windows.net/private/org-GMnbtRP4ficn3DyHiO8HT2Ou/user-uBxP2K66QnLbLi7g9cnyXmw2/img-TLEVdVMIcKMwa5xCaRAp0WCs.png?st=2025-01-02T01%3A52%3A04Z&se=2025-01-02T03%3A52%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-01-02T01%3A28%3A35Z&ske=2025-01-03T01%3A28%3A35Z&sks=b&skv=2024-08-04&sig=CIyBbjhvuKd1OcWdZ5AcTJDHFx3tWbsa%2BoWAI8of8ro%3D"
+    # print("ahhh",temp_img_df.columns)
+    # url = temp_img_df.loc[temp_img_df[' product_id'] == id, 'product_img_url'].values
+    # if len(url) == 0: # If the image URL is not found, return a default image
+    #     return "https://oaidalleapiprodscus.blob.core.windows.net/private/org-GMnbtRP4ficn3DyHiO8HT2Ou/user-uBxP2K66QnLbLi7g9cnyXmw2/img-TLEVdVMIcKMwa5xCaRAp0WCs.png?st=2025-01-02T01%3A52%3A04Z&se=2025-01-02T03%3A52%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-01-02T01%3A28%3A35Z&ske=2025-01-03T01%3A28%3A35Z&sks=b&skv=2024-08-04&sig=CIyBbjhvuKd1OcWdZ5AcTJDHFx3tWbsa%2BoWAI8of8ro%3D"
+    # return url[0]
 
 def embed_item(item: dict) -> np.ndarray:
     """

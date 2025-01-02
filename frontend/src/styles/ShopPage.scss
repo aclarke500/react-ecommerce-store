@@ -1,0 +1,20 @@
+// 
+/* Product Shop */
+.shop-page {
+    display: flex;
+    /* Use flexbox */
+    flex-direction: column;
+    /* Stack title and container */
+    align-items: center;
+    /* Center content horizontally */
+    width: 100%;
+    /* Full width */
+    min-height: 100vh;
+    /* Full page height */
+    padding: 16px;
+    /* Space around the shop */
+    box-sizing: border-box;
+    .title{
+        margin: 1rem;
+    }
+  }

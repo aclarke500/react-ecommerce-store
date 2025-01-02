@@ -54,43 +54,6 @@ body {
   /* Adjust this if the navbar height changes */
 }
 
-/* Product Card */
-.product-card {
-  display: flex;
-  /* Use flexbox to align content inside the card */
-  flex-direction: column;
-  /* Stack content vertically */
-  justify-content: center;
-  /* Center content vertically */
-  align-items: center;
-  /* Center content horizontally */
-  border: 1px solid blue;
-  /* Card border */
-  text-align: center;
-  /* Center text */
-  padding: 16px;
-  /* Inner spacing */
-  border-radius: 8px;
-  /* Rounded corners */
-  width: 200px;
-  /* Uniform card width */
-  height: 250px;
-  /* Uniform card height */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* Subtle shadow */
-  margin: 8px;
-  /* Space around each card */
-  transition: transform 0.2s ease;
-  /* Smooth hover effect */
-}
-
-/* Hover effect for Product Card */
-.product-card:hover {
-  transform: scale(1.05);
-  /* Slight zoom on hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  /* Stronger shadow on hover */
-}
 
 /* Product Container */
 .product-container {
@@ -112,22 +75,6 @@ body {
   /* Include padding in width/height calculations */
 }
 
-/* Product Shop */
-.product-shop {
-  display: flex;
-  /* Use flexbox */
-  flex-direction: column;
-  /* Stack title and container */
-  align-items: center;
-  /* Center content horizontally */
-  width: 100%;
-  /* Full width */
-  min-height: 100vh;
-  /* Full page height */
-  padding: 16px;
-  /* Space around the shop */
-  box-sizing: border-box;
-}
 /* Product Details Page */
 .product-details-page {
   width: 100vw;

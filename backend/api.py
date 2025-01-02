@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import lancedb
 from utils.query_utils import query_db, query_LLM
 from utils.intro import display_ascii_art
 import pandas as pd
 from flask_cors import CORS
+import random
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -88,6 +90,51 @@ def get_product_by_id(product_id):
             if product:
                 return jsonify(product), 200
         raise ValueError(f'Item with id {product_id} not found in these tables: {table_names}')
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+IMAGE_DIR = "photos"
+# Valid range for product images
+MIN_K = 40
+MAX_K = 97
+@app.route('/product_image/<int:product_id>', methods=['GET'])
+def serve_product_image(product_id):
+    try:
+        # Adjust product_id to be within range if it's not
+        if product_id < MIN_K or product_id > MAX_K:
+            product_id = random.randint(MIN_K, MAX_K)
+        
+        # Construct the file path
+        file_path = os.path.join(IMAGE_DIR, f"product_{product_id}.png")
+        
+        # Check if the file exists
+        if not os.path.isfile(file_path):
+            return jsonify({"error": f"Image for product_id {product_id} not found"}), 404
+        
+        # Serve the file
+        return send_file(file_path, mimetype='image/png')
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+@app.route('/products', methods=['GET'])
+def get_all_products():
+    try:
+        all_products = []
+        # Get all table names in the database
+        table_names = db.table_names()
+        for name in table_names:
+            table = db.open_table(name)
+            df = table.to_pandas()
+            for _, row in df.iterrows():
+                product = row_to_product(row, name)
+                all_products.append(product)
+        return jsonify(all_products), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
