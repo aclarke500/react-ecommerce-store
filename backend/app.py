@@ -6,6 +6,7 @@ import pandas as pd
 from flask_cors import CORS
 import random
 import os
+import build_database # just this line will build the lance db
 
 # Initialize Flask app
 app = Flask(__name__)
