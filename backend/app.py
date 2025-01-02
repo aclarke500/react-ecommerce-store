@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 import lancedb
 from utils.query_utils import query_db, query_LLM
-from utils.intro import display_ascii_art
+# from utils.intro import display_ascii_art
 import pandas as pd
 from flask_cors import CORS
 import random
