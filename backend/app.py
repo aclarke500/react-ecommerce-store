@@ -139,4 +139,5 @@ def get_all_products():
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000)) # Use the PORT environment variable if it exists
     app.run()
