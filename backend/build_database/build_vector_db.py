@@ -3,6 +3,7 @@ from build_database.product_meta_data import ProductMetaData
 from build_database.vector_db_utils import create_vector_schema
 
 def build_db():
+    return
     # connect to LanceDB
     db = lancedb.connect("./general_store_db") # we expect to run this file from root directory
 
