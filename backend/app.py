@@ -136,4 +136,4 @@ def get_all_products():
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run()
