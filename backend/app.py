@@ -162,5 +162,6 @@ def get_products_by_category(category):
 # Run the Flask app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000)) # Use the PORT environment variable if it exists
-    dev = os.environ.get("DEV", False)
-    app.run(host=os.getenv('HOST'), port=port, debug=bool(dev))
+    debug_mode = os.environ.get("DEV", "false").lower() == "true"
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
+
