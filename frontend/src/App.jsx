@@ -21,7 +21,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:table_name?" element={<ShopPage />} />
           <Route path="/product/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/ai-assistant" element={<AiAssistantPage />} />
