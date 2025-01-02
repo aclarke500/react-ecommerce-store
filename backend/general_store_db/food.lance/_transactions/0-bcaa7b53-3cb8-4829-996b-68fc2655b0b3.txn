@@ -1,0 +1,2 @@
+$bcaa7b53-3cb8-4829-996b-68fc2655b0b3²Ò#id ÿÿÿÿÿÿÿÿÿ*int6408Zdefault(name ÿÿÿÿÿÿÿÿÿ*string08Zdefault,category ÿÿÿÿÿÿÿÿÿ*string08Zdefault)price ÿÿÿÿÿÿÿÿÿ*double08Zdefault.availability ÿÿÿÿÿÿÿÿÿ*bool08Zdefault.
+shelf_life ÿÿÿÿÿÿÿÿÿ*string08Zdefault/description ÿÿÿÿÿÿÿÿÿ*string08Zdefault+quantity ÿÿÿÿÿÿÿÿÿ*int6408Zdefault=vector ÿÿÿÿÿÿÿÿÿ*fixed_size_list:float:76808Zdefault+img_url	 ÿÿÿÿÿÿÿÿÿ*string08Zdefault

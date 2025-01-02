@@ -12,7 +12,8 @@ app = Flask(__name__)
 db = lancedb.connect("./general_store_db")
 
 
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 # Display ASCII art at startup
 display_ascii_art()
 @app.route('/query', methods=['POST'])
@@ -38,27 +39,22 @@ def query():
             }
             ret_val.append(obj)
         return jsonify(ret_val), 200
-        # # Convert DataFrame or ndarray to JSON serializable format
-        # if isinstance(results, pd.DataFrame):
-        #     json_results = results.to_dict(orient='records')  # Convert DataFrame to list of dicts
-        # elif isinstance(results, np.ndarray):
-        #     json_results = results.tolist()  # Convert ndarray to list
-        # else:
-        #     json_results = results  # Assume it's already serializable
 
-        # return jsonify(json_results), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
-def row_to_product(row) -> dict:
+def row_to_product(row, table_name) -> dict:
+    print(row)
     obj = {
                 "price": row['price'],
                 "id":row['id'],
                 "name":row['name'],
                 "description":row['description'],
                 "quantity":row['quantity'],
-                "availability":row['availability']
+                "availability":row['availability'],
+                "category":table_name,
+                "imgUrl":row['img_url']
             }
     return obj
 
@@ -77,7 +73,7 @@ def get_item_from_table(table_name, id, db) -> dict | None:
     for _, row in df.iterrows():
         print(f"Processing ID: {row['id']}")
         if str(row['id']) == str(id):
-            return row_to_product(row)
+            return row_to_product(row, table_name)
     
     return None
 
@@ -93,18 +89,6 @@ def get_product_by_id(product_id):
                 return jsonify(product), 200
         raise ValueError(f'Item with id {product_id} not found in these tables: {table_names}')
 
-        # # Iterate through each table and search for the product by ID
-        # for table_name in table_names:
-        #     table = db.table(table_name)
-        #     result = table.query(f"SELECT * FROM {table_name} WHERE id = '{product_id}'")
-        #     if not result.empty:
-        #         product = result.iloc[0].to_dict()
-        #         break
-
-        # if product:
-        #     return jsonify(product), 200
-        # else:
-        #     return jsonify({"error": "Product not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
