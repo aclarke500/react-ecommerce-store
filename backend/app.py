@@ -7,7 +7,7 @@ from flask_cors import CORS
 import random
 import os
 from build_database.build_vector_db import build_db 
-
+print("Building database...")
 build_db() # setup the database
 
 # Initialize Flask app
