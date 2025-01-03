@@ -21,11 +21,11 @@ def build_db():
     pet_meta_data = ProductMetaData['pet']
     electronics_meta_data = ProductMetaData['electronics']
 
-    food_vector_schema = create_vector_schema(food_meta_data)
-    pet_vector_schema = create_vector_schema(pet_meta_data)
-    electronics_vector_schema = create_vector_schema(electronics_meta_data)
+    # food_vector_schema = create_vector_schema(food_meta_data)
+    # pet_vector_schema = create_vector_schema(pet_meta_data)
+    # electronics_vector_schema = create_vector_schema(electronics_meta_data)
 
-    # # Create tables
+    # # # Create tables
     # db.create_table("food", data=food_vector_schema)
     # db.create_table("electronics", data=electronics_vector_schema)
     # db.create_table("pet_supplies", data=pet_vector_schema)
