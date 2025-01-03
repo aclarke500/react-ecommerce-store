@@ -82,7 +82,9 @@ def get_item_from_table(table_name, id, db) -> dict | None:
 def get_product_by_id(product_id):
     try:
         # Get all table names in the database
+        print('entered')
         table_names = db.table_names()
+        print('table_names',table_names)
         for name in table_names:
             product = get_item_from_table(name, product_id, db)
             if product:
@@ -90,6 +92,7 @@ def get_product_by_id(product_id):
         raise ValueError(f'Item with id {product_id} not found in these tables: {table_names}')
 
     except Exception as e:
+        print('error',e)
         return jsonify({"error": str(e)}), 500
 
 
