@@ -1,5 +1,0 @@
-load up all the products into an array
-load all descriptions into an array
-load all ids into an array
-embed all descriptions using open anyio
-store into a csv file

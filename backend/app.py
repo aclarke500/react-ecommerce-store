@@ -56,7 +56,6 @@ def row_to_product(row, table_name) -> dict:
                 "quantity":row['quantity'],
                 "availability":row['availability'],
                 "category":table_name,
-                "imgUrl":row['img_url']
             }
     return obj
 
