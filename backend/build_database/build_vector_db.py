@@ -17,13 +17,13 @@ def build_db():
     #     for table_name in db.table_names():
     #         db.drop_table(table_name)
 
-    # food_meta_data = ProductMetaData['food']
-    # pet_meta_data = ProductMetaData['pet']
-    # electronics_meta_data = ProductMetaData['electronics']
+    food_meta_data = ProductMetaData['food']
+    pet_meta_data = ProductMetaData['pet']
+    electronics_meta_data = ProductMetaData['electronics']
 
-    # food_vector_schema = create_vector_schema(food_meta_data)
-    # pet_vector_schema = create_vector_schema(pet_meta_data)
-    # electronics_vector_schema = create_vector_schema(electronics_meta_data)
+    food_vector_schema = create_vector_schema(food_meta_data)
+    pet_vector_schema = create_vector_schema(pet_meta_data)
+    electronics_vector_schema = create_vector_schema(electronics_meta_data)
 
     # # Create tables
     # db.create_table("food", data=food_vector_schema)
