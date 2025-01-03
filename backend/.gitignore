@@ -91,7 +91,7 @@ celerybeat-schedule
 *.sage.py
 
 
-photos/
+# photos/
 
 # dont add the db
 general_store_db/ 
