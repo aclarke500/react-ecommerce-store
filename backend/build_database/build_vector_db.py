@@ -1,15 +1,21 @@
 import lancedb
 from build_database.product_meta_data import ProductMetaData
 from build_database.vector_db_utils import create_vector_schema
+import os
+from dotenv import load_dotenv
 
 def build_db():
-    return
     # connect to LanceDB
     db = lancedb.connect("./general_store_db") # we expect to run this file from root directory
 
     # Drop pre-existing data
-    for table_name in db.table_names():
-        db.drop_table(table_name)
+    load_dotenv()
+
+    is_dev = os.getenv('ENV') == 'DEV'
+    if is_dev:
+        print("Running in development mode")
+        for table_name in db.table_names():
+            db.drop_table(table_name)
 
     food_meta_data = ProductMetaData['food']
     pet_meta_data = ProductMetaData['pet']
