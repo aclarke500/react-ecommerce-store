@@ -3,7 +3,7 @@ from build_database.product_meta_data import ProductMetaData
 from build_database.vector_db_utils import create_vector_schema
 import os
 from dotenv import load_dotenv
-from
+from sentence_transformers import SentenceTransformer
 
 # adding import here to fail fast
 model = SentenceTransformer('all-MPNet-base-v2')
