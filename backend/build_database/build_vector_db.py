@@ -16,7 +16,7 @@ def print_memory_usage(label=""):
 
 # Example usage
 print_memory_usage("before importing sentence-transformers")
-import sentence_transformers
+from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 print_memory_usage("after importing sentence-transformers")
 
