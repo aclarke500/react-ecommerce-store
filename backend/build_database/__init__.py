@@ -1,6 +1,6 @@
 import lancedb
-from product_meta_data import ProductMetaData
-from vector_db_utils import create_vector_schema
+from build_database.product_meta_data import ProductMetaData
+from build_database.vector_db_utils import create_vector_schema
 
 
 # connect to LanceDB
