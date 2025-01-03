@@ -4,6 +4,9 @@ from build_database.vector_db_utils import create_vector_schema
 import os
 from dotenv import load_dotenv
 
+# adding import here to fail fast
+model = SentenceTransformer('all-MPNet-base-v2')
+
 def build_db():
     # connect to LanceDB
     db = lancedb.connect("./general_store_db") # we expect to run this file from root directory
