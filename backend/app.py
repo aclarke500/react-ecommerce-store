@@ -137,4 +137,12 @@ def get_all_products():
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
-    app.run()
+    # Run the Flask app
+    print("Starting Flask app...")
+    port = int(os.environ.get("PORT", 10000)) # Use the PORT environment variable if it exists
+    print(f"Starting server on 0.0.0.0:{port}...")
+    debug_mode = os.environ.get("DEV", "false").lower() == "true"
+    if debug_mode:
+        print("Running in debug mode")
+        port = 5001
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
