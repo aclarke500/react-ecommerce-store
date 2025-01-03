@@ -6,7 +6,7 @@ import pandas as pd
 from flask_cors import CORS
 import random
 import os
-import build_database # just this line will build the lance db
+from build_database.build_vector_db import build # just this line will build the lance db
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -48,7 +48,6 @@ def query():
 
 
 def row_to_product(row, table_name) -> dict:
-    print(row)
     obj = {
                 "price": row['price'],
                 "id":row['id'],
@@ -74,7 +73,6 @@ def get_item_from_table(table_name, id, db) -> dict | None:
     df = table.to_pandas()
 
     for _, row in df.iterrows():
-        print(f"Processing ID: {row['id']}")
         if str(row['id']) == str(id):
             return row_to_product(row, table_name)
     
@@ -137,6 +135,8 @@ def get_all_products():
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
+    print("Building LanceDB...")
+    build()
     # Run the Flask app
     print("Starting Flask app...")
     port = int(os.environ.get("PORT", 10000)) # Use the PORT environment variable if it exists

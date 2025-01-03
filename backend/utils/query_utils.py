@@ -1,4 +1,4 @@
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 import numpy as np
 import os
 import pandas as pd
@@ -10,7 +10,7 @@ import lancedb
 # load environmentr vars, and get the openAI client and transformers loaded
 load_dotenv()
 api_key = os.getenv('open_ai_key')
-model = SentenceTransformer('all-MPNet-base-v2')
+# model = SentenceTransformer('all-MPNet-base-v2')
 client = OpenAI(api_key=api_key)
 
 def get_department(query: dict) -> str | None:
@@ -33,23 +33,13 @@ def get_department(query: dict) -> str | None:
         return category
     return None
 
-def embed_query_description(query : dict) -> np.ndarray:
-    """
-    Embeds the description in the query using the SentenceTransformer model.
+def embed_query_description(query, model="text-embedding-3-large"):
+    text = query["description"]
+    text = text.replace("\n", " ")
+    embedding = client.embeddings.create(input = [text], model=model).data[0].embedding
+    norm_embedding = embedding / np.linalg.norm(embedding)
+    return norm_embedding
 
-    Args:
-        query (dict): The query parameters.
-
-    Returns:
-        np.ndarray: The normalized embedding of the description.
-    """
-    if "description" not in query or not query["description"]:
-        raise ValueError("Query must contain a description")
-    
-    description = query["description"]
-    embedding = model.encode(description)
-    normalized_embedding = embedding / np.linalg.norm(embedding)
-    return normalized_embedding
 
 def query_db(query: dict, db: lancedb.LanceDBConnection) -> pd.DataFrame:
     """
@@ -68,7 +58,7 @@ def query_db(query: dict, db: lancedb.LanceDBConnection) -> pd.DataFrame:
     
     table = db.open_table(table_name)
     query_vector = embed_query_description(query)
-    
+    print(f"Query vector length: {len(query_vector)}")
     results = table.search(query_vector).metric('cosine').where(
         f"price >= {query['price_min']} AND price <= {query['price_max']} AND quantity >= {query['quantity_min']}"
     ).limit(10).to_pandas()
