@@ -3,10 +3,26 @@ from build_database.product_meta_data import ProductMetaData
 from build_database.vector_db_utils import create_vector_schema
 import os
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
+
+
+
+import psutil
+
+def print_memory_usage(label=""):
+    process = psutil.Process()
+    mem_info = process.memory_info().rss / (1024 * 1024)  # in MB
+    print(f"Memory usage {label}: {mem_info:.2f} MB")
+
+# Example usage
+print_memory_usage("before importing sentence-transformers")
+import sentence_transformers
+model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+print_memory_usage("after importing sentence-transformers")
+
 
 # adding import here to fail fast
-model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+
 
 def build_db():
     # connect to LanceDB
