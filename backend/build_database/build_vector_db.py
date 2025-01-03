@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 
 # adding import here to fail fast
-model = SentenceTransformer('all-MPNet-base-v2')
+model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 
 def build_db():
     # connect to LanceDB
