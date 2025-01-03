@@ -115,6 +115,10 @@ def serve_product_image(product_id):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({"message": "Test endpoint is working"}), 200
+
 
 @app.route('/products', methods=['GET'])
 def get_all_products():
