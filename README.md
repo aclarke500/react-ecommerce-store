@@ -1,5 +1,7 @@
 
-# E-Commerce Product Page with React
+# SmartCartAI
+
+#### Check out the live version <a href="https://smartcartai.netlify.app/">here!</a>
 
 This is a full stack project meant to showcase/practice frontend and backend development, as well as some AI experience by employing a RAG. The main technologies used in this project are:
 - **React**: I've always been a VueJS guy, so the primary motivation of this was to upskill my React capabilities.
