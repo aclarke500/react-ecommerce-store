@@ -1,0 +1,1 @@
+curl -X GET https://react-rag-store.onrender.com/product/165 > results.json
