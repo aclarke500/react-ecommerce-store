@@ -29,7 +29,6 @@ export default function ProductCard(props) {
             <img src={imageSrc}/>
             <div className="product-tag">
                 <p className='name'>{props.product.name}</p>
-                {/* <p className='description'>{props.product.description}</p> */}
                 <p className='price'>${props.product.price}</p>
             </div>
         </div>
