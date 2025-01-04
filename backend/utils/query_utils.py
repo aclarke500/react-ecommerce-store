@@ -14,10 +14,14 @@ api_key = os.getenv('open_ai_key')
 
 client = OpenAI(api_key=api_key)
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+
+
 categories = {
-    'food':'./data/food_products.json',
-    'electronics':'./data/electronics_products.json',
-    'pet_supplies':'./data/pet_products.json'
+    'food': os.path.join(BASE_DIR, 'data', 'food_products.json'),
+    'electronics': os.path.join(BASE_DIR, 'data', 'electronics_products.json'),
+    'pet_supplies': os.path.join(BASE_DIR, 'data', 'pet_products.json')
 }
 
 
@@ -61,7 +65,7 @@ def query_db(query: dict) -> pd.DataFrame:
     """
     table_name = get_department(query)
     query_vector = embed_query_description(query)
-    ids = get_top_n_products(query_vector)
+    ids = get_top_n_products(query_vector, table_name)
     results = get_products_from_id_list(ids)
     return results
 
@@ -116,7 +120,7 @@ def query_LLM(user_input: str) -> dict | None:
 
 
 
-def get_top_n_products(embedding: List[float], n: int = 25) -> List[int]:
+def get_top_n_products(embedding: List[float], category:str, n: int = 25) -> List[int]:
     """Retrieve the top N product IDs based on cosine similarity to the given embedding.
 
     Args:
@@ -126,7 +130,9 @@ def get_top_n_products(embedding: List[float], n: int = 25) -> List[int]:
     Returns:
         List[int]: A list of the top N product IDs.
     """
-    with open('data.json', 'r') as file:
+    file_path = categories[category]
+    print(file_path)
+    with open(file_path, 'r') as file:
         data = json.load(file)
 
     similarities = [
@@ -151,11 +157,12 @@ def get_products_from_id_list(id_list: List[int]) -> List[Dict]:
     Returns:
         List[Dict]: A list of product dictionaries.
     """
-    with open('data.json', 'r') as file:
-        data = json.load(file)
-
-    return [product for product in data if product['id'] in id_list]
-
+    products = []
+    for id in id_list:
+        product = get_product_from_id(id)
+        if product:
+            products.append(product)
+    return products
 
 def get_random_products(data: List[Dict], n: int = 25) -> List[Dict]:
     """Retrieve N random products from the provided data.
