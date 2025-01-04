@@ -44,7 +44,7 @@ def query():
         response = query_LLM(user_input)
         results = query_db(response)  # This might return a DataFrame or ndarray
         ret_val = []
-        for index, row in results.head(15).iterrows():
+        for row in results:
             obj = {
                 "price": row['price'],
                 "id":row['id'],
@@ -164,4 +164,4 @@ if __name__ == "__main__":
     if debug_mode:
         print("Running in debug mode")
         port = 5001
-    app.run(host="0.0.0.0", port=port, debug=debug_mode)
+    app.run(host="0.0.0.0", port=port, debug=True)

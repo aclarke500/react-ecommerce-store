@@ -61,12 +61,14 @@ def query_db(query: dict) -> pd.DataFrame:
     
     # table = db.open_table(table_name)
     query_vector = embed_query_description(query)
-    results = get_top_n_products(query_vector)
+    ids = get_top_n_products(query_vector)
+    results = get_products_from_id_list(ids)
     return results
     # print(f"Query vector length: {len(query_vector)}")
     # results = table.search(query_vector).metric('cosine').where(
     #     f"price >= {query['price_min']} AND price <= {query['price_max']} AND quantity >= {query['quantity_min']}"
     # ).limit(10).to_pandas()
+
 
 
 def query_LLM(user_input: str) -> dict | None:
@@ -117,7 +119,7 @@ def query_LLM(user_input: str) -> dict | None:
 
 
 
-def get_top_n_products(embedding: List[float]) -> List[int]:
+def get_top_n_products(embedding: List[float], n=25) -> List[int]:
     """
     Get the top n product IDs based on cosine similarity to the given embedding.
     :param embedding: The vector embedding to compare.
@@ -130,12 +132,31 @@ def get_top_n_products(embedding: List[float]) -> List[int]:
         data = json.load(file)
     similarities = []
     for product in data:
-        product_embedding = product['embedding']
+        product_embedding = product['vector']
         similarity = cosine_similarity([embedding], [product_embedding])[0][0]
         similarities.append((product['id'], similarity))
     
+
+    if len(similarities) < n:
+        n = len(similarities)
     # Sort by similarity in descending order and get the top n product IDs
     similarities.sort(key=lambda x: x[1], reverse=True)
     top_n_products = [product_id for product_id, _ in similarities[:n]]
     
     return top_n_products
+
+def get_products_from_id_list(id_list: List[int]) -> List[dict]:
+    """
+    Get the products from a list of IDs.
+    :param id_list: The list of product IDs.
+    :param data: The data to search.
+    :return: A list of products.
+    """
+    data = None
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+    products = []
+    for product in data:
+        if product['id'] in id_list:
+            products.append(product)
+    return products
