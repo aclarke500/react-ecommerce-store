@@ -3,11 +3,15 @@
 
 #### Check out the live version <a href="https://smartcartai.netlify.app/">here!</a>
 
-This is a full stack project meant to showcase/practice frontend and backend development, as well as some AI experience by employing a RAG. The main technologies used in this project are:
+This is a full stack project meant to showcase/practice frontend and backend development, as well as some AI experience by employing a RAG. 
+The main technologies/features worth mentioned  this project are:
 - **React**: I've always been a VueJS guy, so the primary motivation of this was to upskill my React capabilities.
 - **Flask**: A Flask server is used to dish out the api and integrates with the React front end. It handles the RAG as well as serving products and images to the front end.
 - **OpenAI**: The LLM used for the RAG and all sentence embeddings are done using OpenAI's respective tooling.
 - **Render**: Continuous deploymnet is done using render for hosting the Flask API.
+- **Integration Testing**: Integration testing the API is done for both dev and prod environments.
+- **CI/CD**: A Render server automatically deploys the Flask API whenever it detects pushes to main.
+- **Branching/PRs**: Following SWE best practices, tasks are outlined using Github Issues and assigned their own branch. They are merged in through a PR process after unit tests pass.
 - **Numpy/sklearn**: Numpy is used to process the embeddings and sklearn is used to rank the embeddings.
 
 ---
