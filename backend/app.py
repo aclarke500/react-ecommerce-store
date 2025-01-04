@@ -81,6 +81,8 @@ def get_product_by_id(product_id):
     product_id = int(product_id)
     try:
         product = get_product_from_id(product_id,data)
+        if product is None:
+            return jsonify({"error": f"Product with id {product_id} not found"}), 404
         return jsonify(product), 200
 
     except Exception as e:
