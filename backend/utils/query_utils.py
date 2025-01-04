@@ -5,7 +5,10 @@ import pandas as pd
 from dotenv import load_dotenv
 from openai import OpenAI
 import json
-import lancedb
+from sklearn.metrics.pairwise import cosine_similarity
+from typing import List
+
+# import lancedb
 
 # load environmentr vars, and get the openAI client and transformers loaded
 load_dotenv()
@@ -41,7 +44,7 @@ def embed_query_description(query, model="text-embedding-3-large"):
     return norm_embedding
 
 
-def query_db(query: dict, db: lancedb.LanceDBConnection) -> pd.DataFrame:
+def query_db(query: dict) -> pd.DataFrame:
     """
     Executes a query on the database and returns the results.
 
@@ -52,18 +55,19 @@ def query_db(query: dict, db: lancedb.LanceDBConnection) -> pd.DataFrame:
     Returns:
         pd.DataFrame: A DataFrame containing the query results.
     """
-    table_name = get_department(query)
-    if not table_name:
-        return pd.DataFrame({})  # Return an empty list if the department is not found
+    # table_name = get_department(query)
+    # if not table_name:
+    #     return pd.DataFrame({})  # Return an empty list if the department is not found
     
-    table = db.open_table(table_name)
+    # table = db.open_table(table_name)
     query_vector = embed_query_description(query)
-    print(f"Query vector length: {len(query_vector)}")
-    results = table.search(query_vector).metric('cosine').where(
-        f"price >= {query['price_min']} AND price <= {query['price_max']} AND quantity >= {query['quantity_min']}"
-    ).limit(10).to_pandas()
-    
+    results = get_top_n_products(query_vector)
     return results
+    # print(f"Query vector length: {len(query_vector)}")
+    # results = table.search(query_vector).metric('cosine').where(
+    #     f"price >= {query['price_min']} AND price <= {query['price_max']} AND quantity >= {query['quantity_min']}"
+    # ).limit(10).to_pandas()
+
 
 def query_LLM(user_input: str) -> dict | None:
     """
@@ -110,3 +114,28 @@ def query_LLM(user_input: str) -> dict | None:
     except:
         return None
     return response_message
+
+
+
+def get_top_n_products(embedding: List[float]) -> List[int]:
+    """
+    Get the top n product IDs based on cosine similarity to the given embedding.
+    :param embedding: The vector embedding to compare.
+    :param data: The data to search.
+    :param n: The number of top products to return.
+    :return: A list of top n product IDs.
+    """
+    data = None
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+    similarities = []
+    for product in data:
+        product_embedding = product['embedding']
+        similarity = cosine_similarity([embedding], [product_embedding])[0][0]
+        similarities.append((product['id'], similarity))
+    
+    # Sort by similarity in descending order and get the top n product IDs
+    similarities.sort(key=lambda x: x[1], reverse=True)
+    top_n_products = [product_id for product_id, _ in similarities[:n]]
+    
+    return top_n_products

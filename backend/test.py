@@ -33,7 +33,7 @@ def get_product_from_id(id: int, data: dict) -> dict:
             return product
     return None
 
-def get_top_n_products(embedding: List[float], data: dict, n: int) -> List[int]:
+def get_top_n_products(embedding: List[float]) -> List[int]:
     """
     Get the top n product IDs based on cosine similarity to the given embedding.
     :param embedding: The vector embedding to compare.
@@ -41,6 +41,9 @@ def get_top_n_products(embedding: List[float], data: dict, n: int) -> List[int]:
     :param n: The number of top products to return.
     :return: A list of top n product IDs.
     """
+    data = None
+    with open(file_path, 'r') as file:
+        data = json.load(file)
     similarities = []
     for product in data:
         product_embedding = product['embedding']

@@ -34,7 +34,7 @@ display_ascii_art()
 def query():
     # db = lancedb.connect("./general_store_db")
     try:
-        return jsonify({"message": "Query endpoint is working"}), 200
+        # return jsonify({"message": "Query endpoint is working"}), 200
         # Get the JSON input from the request
         user_input = request.json.get('query', '')
         if not user_input:
@@ -42,7 +42,7 @@ def query():
 
         # Call the LLM and query the database
         response = query_LLM(user_input)
-        results = query_db(response, db)  # This might return a DataFrame or ndarray
+        results = query_db(response)  # This might return a DataFrame or ndarray
         ret_val = []
         for index, row in results.head(15).iterrows():
             obj = {
@@ -52,7 +52,7 @@ def query():
                 "description":row['description'],
                 "quantity":row['quantity'],
                 "availability":row['availability'],
-                "vector": row['vector']
+                # "vector": row['vector']
             }
             ret_val.append(obj)
         return jsonify(ret_val), 200
@@ -70,7 +70,7 @@ def row_to_product(row, table_name) -> dict:
                 "quantity":row['quantity'],
                 "availability":row['availability'],
                 "category":table_name,
-                "vector": row['vector'].tolist()
+                # "vector": row['vector'].tolist()
             }
     return obj
 
