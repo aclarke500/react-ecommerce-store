@@ -12,7 +12,7 @@ from build_database.build_vector_db import build # just this line will build the
 app = Flask(__name__)
 
 # Connect to LanceDB
-db = lancedb.connect("./general_store_db")
+
 
 
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -21,6 +21,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 display_ascii_art()
 @app.route('/query', methods=['POST'])
 def query():
+    db = lancedb.connect("./general_store_db")
     try:
         # Get the JSON input from the request
         user_input = request.json.get('query', '')
@@ -80,6 +81,8 @@ def get_item_from_table(table_name, id, db) -> dict | None:
 
 @app.route('/product/<product_id>', methods=['GET'])
 def get_product_by_id(product_id):
+    print('opening db')
+    db = lancedb.connect("./general_store_db")
     try:
         # Get all table names in the database
         print('entered')
