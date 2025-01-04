@@ -10,10 +10,12 @@ from build_database.build_vector_db import build # just this line will build the
 
 # Initialize Flask app
 app = Flask(__name__)
-
+print("Building LanceDB...")
+build()
 # Connect to LanceDB
+db = lancedb.connect("./general_store_db")
 
-
+   
 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
@@ -144,8 +146,6 @@ def get_all_products():
         return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
-    print("Building LanceDB...")
-    build()
     # Run the Flask app
     print("Starting Flask app...")
     port = int(os.environ.get("PORT", 10000)) # Use the PORT environment variable if it exists
