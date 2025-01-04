@@ -14,6 +14,17 @@ api_key = os.getenv('open_ai_key')
 
 client = OpenAI(api_key=api_key)
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+
+
+categories = {
+    'food': os.path.join(BASE_DIR, 'data', 'food_products.json'),
+    'electronics': os.path.join(BASE_DIR, 'data', 'electronics_products.json'),
+    'pet_supplies': os.path.join(BASE_DIR, 'data', 'pet_products.json')
+}
+
+
 def get_department(query: dict) -> str | None:
     """
     Gets the department from the query.
@@ -54,7 +65,7 @@ def query_db(query: dict) -> pd.DataFrame:
     """
     table_name = get_department(query)
     query_vector = embed_query_description(query)
-    ids = get_top_n_products(query_vector)
+    ids = get_top_n_products(query_vector, table_name)
     results = get_products_from_id_list(ids)
     return results
 
@@ -109,7 +120,7 @@ def query_LLM(user_input: str) -> dict | None:
 
 
 
-def get_top_n_products(embedding: List[float], n: int = 25) -> List[int]:
+def get_top_n_products(embedding: List[float], category:str, n: int = 25) -> List[int]:
     """Retrieve the top N product IDs based on cosine similarity to the given embedding.
 
     Args:
@@ -119,7 +130,9 @@ def get_top_n_products(embedding: List[float], n: int = 25) -> List[int]:
     Returns:
         List[int]: A list of the top N product IDs.
     """
-    with open('data.json', 'r') as file:
+    file_path = categories[category]
+    print(file_path)
+    with open(file_path, 'r') as file:
         data = json.load(file)
 
     similarities = [
@@ -144,11 +157,12 @@ def get_products_from_id_list(id_list: List[int]) -> List[Dict]:
     Returns:
         List[Dict]: A list of product dictionaries.
     """
-    with open('data.json', 'r') as file:
-        data = json.load(file)
-
-    return [product for product in data if product['id'] in id_list]
-
+    products = []
+    for id in id_list:
+        product = get_product_from_id(id)
+        if product:
+            products.append(product)
+    return products
 
 def get_random_products(data: List[Dict], n: int = 25) -> List[Dict]:
     """Retrieve N random products from the provided data.
@@ -160,20 +174,35 @@ def get_random_products(data: List[Dict], n: int = 25) -> List[Dict]:
     Returns:
         List[Dict]: A list of N random product dictionaries.
     """
+    if n >= len(data):
+        return data
     return random.sample(data, n)
 
 
-def get_product_from_id(product_id: int, data: List[Dict]) -> Optional[Dict]:
-    """Retrieve a product matching the given ID.
+def get_product_from_id(product_id: int) -> Optional[Dict]:
+    """Retrieve a product matching the given ID by lazily loading category files.
 
     Args:
         product_id (int): The ID of the product to retrieve.
-        data (List[Dict]): The product data to search.
 
     Returns:
         Optional[Dict]: The product dictionary if found, otherwise None.
     """
-    for product in data:
-        if product['id'] == product_id:
-            return product
+    for category, file_path in categories.items():
+        try:
+            # Lazy load the product table for the current category
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+
+            # Search for the product in the current category
+            for product in data:
+                if product['id'] == product_id:
+                    return product
+
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            # Log the error or handle it as needed (e.g., print or raise an exception)
+            print(f"Error loading {file_path}: {e}")
+            continue
+
+    # If not found in any category
     return None
