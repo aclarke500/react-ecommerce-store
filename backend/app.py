@@ -6,9 +6,15 @@ import os
 import json
 
 # data is stored in a JSON file
-file_path = './data.json'
-with open(file_path, 'r') as file:
-    data = json.load(file)
+# file_path = './data.json'
+# with open(file_path, 'r') as file:
+#     data = json.load(file)
+
+categories = {
+    'food':'./data/food_products.json',
+    'electronics':'./data/electronics_products.json',
+    'pet_supplies':'./data/pet_products.json'
+}
 
 app = Flask(__name__)
 
@@ -80,7 +86,7 @@ def get_item_from_table(table_name, id, db) -> dict | None:
 def get_product_by_id(product_id):
     product_id = int(product_id)
     try:
-        product = get_product_from_id(product_id,data)
+        product = get_product_from_id(product_id)
         if product is None:
             return jsonify({"error": f"Product with id {product_id} not found"}), 404
         return jsonify(product), 200
@@ -115,15 +121,37 @@ def test():
     return jsonify({"message": "Test endpoint is working"}), 200
 
 
-@app.route('/products', methods=['GET'])
-def get_all_products():
+
+def load_data(file_path):
+    """Load JSON data from a file."""
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+@app.route('/products', defaults={'category': None}, methods=['GET'])
+@app.route('/products/<category>', methods=['GET'])
+def get_all_products(category):
     try:
-        all_products = get_random_products(data, 25)
-        return jsonify(all_products), 200
+        if category:
+            if category not in categories:
+                return jsonify({"error": f"Category '{category}' not found"}), 404
+            
+            # Lazy load the category-specific JSON file
+            data_table = load_data(categories[category])
+            products = get_random_products(data_table, 25)
+            return jsonify(products), 200
+
+        # No category specified: Load and mix products from all categories
+        pet_products = get_random_products(load_data(categories['pet_supplies']), 8)
+        food_products = get_random_products(load_data(categories['food']), 8)
+        electronics_products = get_random_products(load_data(categories['electronics']), 9)
+
+        mixed_products = pet_products + food_products + electronics_products
+        return jsonify(mixed_products), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-   
+
+
 # Run the Flask app
 if __name__ == "__main__":
     # Display ASCII art at startup
