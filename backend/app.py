@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, send_file
-import lancedb
+# import lancedb
 from utils.query_utils import query_db, query_LLM
 from utils.intro import display_ascii_art
 import pandas as pd
 from flask_cors import CORS
 import random
 import os
-from build_database.build_vector_db import build # just this line will build the lance db
+# from build_database.build_vector_db import build # just this line will build the lance db
 from test import get_random_products, get_product_from_id, get_top_n_products
 import json
 
@@ -20,7 +20,7 @@ with open(file_path, 'r') as file:
 # Initialize Flask app
 app = Flask(__name__)
 print("Building LanceDB...")
-build()
+# build()
 # Connect to LanceDB
 # db = lancedb.connect("./general_store_db")
 
