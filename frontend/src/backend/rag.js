@@ -1,3 +1,4 @@
+import urlPrefix from "./url";
 /**
  * Queries the RAG to get the most relevant products
  * Returns sample data w/o backend call if query is 'hi' or 'test'.
@@ -8,7 +9,7 @@ export async function queryRAG(query){
   if (query == 'hi' || query =='est') return test;
 
 
-  const url = "http://127.0.0.1:5001/query";
+  const url = urlPrefix+"query";
   const response = await fetch(url, {
       method: 'POST',
       headers: {

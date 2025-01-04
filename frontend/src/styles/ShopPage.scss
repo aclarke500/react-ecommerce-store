@@ -17,4 +17,18 @@
     .title{
         margin: 1rem;
     }
+    
+  }
+
+  .shop-page-spinner{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .spinner{
+        flex: 1;
+    }
+
   }

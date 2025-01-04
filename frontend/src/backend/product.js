@@ -1,10 +1,11 @@
+import urlPrefix from "./url.js";
 /**
  * Gets the product object from the backend given an id
  * @param {Number} id id number corresponding to product
  * @returns {Object} product object
  */
 export async function getProductFromId(id){
-    const url = `http://localhost:5001/product/${id}`;
+    const url = urlPrefix+`product/${id}`;
     const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -26,7 +27,7 @@ export async function getProductFromId(id){
  * @returns {Promise<string>} Blob URL of the product image
  */
 export async function getProductImageFromId(id) {
-    const url = `http://localhost:5001/product_image/${id}`;
+    const url = urlPrefix+`product_image/${id}`;
     
     const response = await fetch(url, {
         method: 'GET',
@@ -45,14 +46,14 @@ export async function getProductImageFromId(id) {
  * @returns {Promise<Array>} Array of product objects
  */
 export async function getAllProducts() {
-    const url = `http://localhost:5001/products`;
+    const url = urlPrefix+`products`;
+    
     const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     });
-
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
