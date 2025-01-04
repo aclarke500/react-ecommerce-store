@@ -21,22 +21,34 @@
     width: 100%;
     /* Full width of the parent container */
     // border: 1px solid green; /* Debug border */
-    padding: 10px 0;
+    padding: 10px;
     /* Optional: Add vertical spacing */
     justify-content: space-between;
     /* Align name, price, and description */
     .name,
     .price,
     .description{
-        flex: 1;
+        flex: 5;
+        display: flex;
+        // justify-content: center;
+        align-items: center;
     }
     h3{
         margin: 0;
     }
-    .cell{
-        // border: 1px solid red;
+}
+
+.cart{
+    padding: 8px;
+    border-radius: 5px;
+    &:hover{
+        background-color: #ccc;
+        transition: background-color 0.5s ease;
+
     }
 }
+
+
 
 .product:hover {
     background-color: #4b4b4b;

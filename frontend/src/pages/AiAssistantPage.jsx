@@ -22,11 +22,15 @@ export default function AiAssistantPage() {
         setIsLoading(false);
 
     }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            getItems();
+        }
+    };
 
 
     // html
     return <>
-        {/* <p>{showProducts}</p> */}
         {!showProducts && <div>
             {!isLoading && <div className="content-box">
                 <div className="ai-container">
@@ -40,7 +44,9 @@ export default function AiAssistantPage() {
                         <input
                             placeholder="What would you like to search for?"
                             value={userQuery}
+                            autoFocus
                             onChange={(e) => setUserQuery(e.target.value)}
+                            onKeyDown={ handleKeyDown}
                         >
                         </input>
                     </div>
@@ -60,9 +66,9 @@ export default function AiAssistantPage() {
                 </div>
             }
         </div>}
-        {showProducts && 
-        <div className="product-list">
-        <ProductList products={products} />
-        </div>}
+        {showProducts &&
+            <div className="product-list">
+                <ProductList products={products} />
+            </div>}
     </>
 }
