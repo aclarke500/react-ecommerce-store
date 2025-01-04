@@ -1,4 +1,3 @@
-# from sentence_transformers import SentenceTransformer
 import numpy as np
 import os
 import pandas as pd
@@ -6,14 +5,13 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import json
 from sklearn.metrics.pairwise import cosine_similarity
-from typing import List
-
-# import lancedb
+from typing import List, Dict, Optional
+import random
 
 # load environmentr vars, and get the openAI client and transformers loaded
 load_dotenv()
 api_key = os.getenv('open_ai_key')
-# model = SentenceTransformer('all-MPNet-base-v2')
+
 client = OpenAI(api_key=api_key)
 
 def get_department(query: dict) -> str | None:
@@ -50,24 +48,15 @@ def query_db(query: dict) -> pd.DataFrame:
 
     Args:
         query (dict): The query parameters, including filters like price and quantity.
-        db (lancedb.LanceDBConnection): The LanceDB connection object.
 
     Returns:
         pd.DataFrame: A DataFrame containing the query results.
     """
-    # table_name = get_department(query)
-    # if not table_name:
-    #     return pd.DataFrame({})  # Return an empty list if the department is not found
-    
-    # table = db.open_table(table_name)
+    table_name = get_department(query)
     query_vector = embed_query_description(query)
     ids = get_top_n_products(query_vector)
     results = get_products_from_id_list(ids)
     return results
-    # print(f"Query vector length: {len(query_vector)}")
-    # results = table.search(query_vector).metric('cosine').where(
-    #     f"price >= {query['price_min']} AND price <= {query['price_max']} AND quantity >= {query['quantity_min']}"
-    # ).limit(10).to_pandas()
 
 
 
@@ -119,44 +108,72 @@ def query_LLM(user_input: str) -> dict | None:
 
 
 
-def get_top_n_products(embedding: List[float], n=25) -> List[int]:
+
+def get_top_n_products(embedding: List[float], n: int = 25) -> List[int]:
+    """Retrieve the top N product IDs based on cosine similarity to the given embedding.
+
+    Args:
+        embedding (List[float]): The vector embedding to compare.
+        n (int, optional): The number of top products to return. Defaults to 25.
+
+    Returns:
+        List[int]: A list of the top N product IDs.
     """
-    Get the top n product IDs based on cosine similarity to the given embedding.
-    :param embedding: The vector embedding to compare.
-    :param data: The data to search.
-    :param n: The number of top products to return.
-    :return: A list of top n product IDs.
-    """
-    data = None
     with open('data.json', 'r') as file:
         data = json.load(file)
-    similarities = []
-    for product in data:
-        product_embedding = product['vector']
-        similarity = cosine_similarity([embedding], [product_embedding])[0][0]
-        similarities.append((product['id'], similarity))
-    
 
-    if len(similarities) < n:
-        n = len(similarities)
-    # Sort by similarity in descending order and get the top n product IDs
+    similarities = [
+        (product['id'], cosine_similarity([embedding], [product['vector']])[0][0])
+        for product in data
+    ]
+
+    # Adjust N if fewer products are available
+    n = min(n, len(similarities))
+
+    # Sort by similarity in descending order and get the top N product IDs
     similarities.sort(key=lambda x: x[1], reverse=True)
-    top_n_products = [product_id for product_id, _ in similarities[:n]]
-    
-    return top_n_products
+    return [product_id for product_id, _ in similarities[:n]]
 
-def get_products_from_id_list(id_list: List[int]) -> List[dict]:
+
+def get_products_from_id_list(id_list: List[int]) -> List[Dict]:
+    """Retrieve products matching a list of IDs.
+
+    Args:
+        id_list (List[int]): The list of product IDs to retrieve.
+
+    Returns:
+        List[Dict]: A list of product dictionaries.
     """
-    Get the products from a list of IDs.
-    :param id_list: The list of product IDs.
-    :param data: The data to search.
-    :return: A list of products.
-    """
-    data = None
     with open('data.json', 'r') as file:
         data = json.load(file)
-    products = []
+
+    return [product for product in data if product['id'] in id_list]
+
+
+def get_random_products(data: List[Dict], n: int = 25) -> List[Dict]:
+    """Retrieve N random products from the provided data.
+
+    Args:
+        data (List[Dict]): The product data to search.
+        n (int, optional): The number of random products to return. Defaults to 25.
+
+    Returns:
+        List[Dict]: A list of N random product dictionaries.
+    """
+    return random.sample(data, n)
+
+
+def get_product_from_id(product_id: int, data: List[Dict]) -> Optional[Dict]:
+    """Retrieve a product matching the given ID.
+
+    Args:
+        product_id (int): The ID of the product to retrieve.
+        data (List[Dict]): The product data to search.
+
+    Returns:
+        Optional[Dict]: The product dictionary if found, otherwise None.
+    """
     for product in data:
-        if product['id'] in id_list:
-            products.append(product)
-    return products
+        if product['id'] == product_id:
+            return product
+    return None
