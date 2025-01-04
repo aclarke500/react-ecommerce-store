@@ -38,3 +38,27 @@ def test_helth():
     response = requests.get(f"{url}/test")
     assert response.status_code == 200  # check HTTP status code
     assert response.json()["message"] == "Test endpoint is working"  # check if response message is correct
+
+def test_get_products_by_valid_category():
+    """Test retrieving products by a valid category (food)."""
+    response = requests.get(f"{url}/products/electronics")
+    
+    # Check HTTP status code
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    
+    # Check if response is a list
+    data = response.json()
+    assert isinstance(data, list), "Response should be a list"
+
+
+def test_get_products_no_category():
+    """Test retrieving products when no category is specified."""
+    response = requests.get(f"{url}/products")
+    
+    # Check HTTP status code
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    
+    # Check if response is a list
+    data = response.json()
+    assert isinstance(data, list), "Response should be a list"
+
