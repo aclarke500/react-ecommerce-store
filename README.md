@@ -1,35 +1,16 @@
 
 # E-Commerce Product Page with React
 
-This is a feature-rich e-commerce web application built with React, providing users with a seamless product browsing and shopping cart experience. The project demonstrates modern React development practices, including Context API for state management, responsive design, and reusable components.
+This is a full stack project meant to showcase/practice frontend and backend development, as well as some AI experience by employing a RAG. The main technologies used in this project are:
+- **React**: I've always been a VueJS guy, so the primary motivation of this was to upskill my React capabilities.
+- **Flask**: A Flask server is used to dish out the api and integrates with the React front end. It handles the RAG as well as serving products and images to the front end.
+- **OpenAI**: The LLM used for the RAG and all sentence embeddings are done using OpenAI's respective tooling.
+- **Render**: Continuous deploymnet is done using render for hosting the Flask API.
+- **Numpy/sklearn**: Numpy is used to process the embeddings and sklearn is used to rank the embeddings.
 
 ---
 
-## Features
 
-- **AI-Powered Product Search**: Integrated RAG (Retrieval-Augmented Generation) to provide intelligent product search functionality.
-- **Dynamic Product Listing**: View a variety of products with details such as name, price, and description.
-- **Cart Page**: Displays selected products, total cost, and allows users to remove items.
-- **Dark Theme**: Modern styling with a user-friendly layout optimized for dark mode.
-- **Responsive Design**: Optimized for all screen sizes, from desktops to mobile devices.
-
----
-
-## Technologies Used
-
-- **Frontend**:
-  - [React](https://reactjs.org/) - Component-based JavaScript library for building user interfaces.
-  - [React Router](https://reactrouter.com/) - For handling client-side routing.
-  - CSS for styling, including responsive design.
-
-- **Backend**:
-  - [Flask](https://flask.palletsprojects.com/) - Lightweight Python web framework.
-  - LanceDB - Vector database for intelligent product queries.
-
-- **State Management**:
-  - React Context API for managing product and cart state.
-
----
 
 ## Getting Started
 
@@ -46,7 +27,7 @@ This is a feature-rich e-commerce web application built with React, providing us
    ```
 3. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 #### Backend Setup
@@ -62,7 +43,7 @@ This is a feature-rich e-commerce web application built with React, providing us
    ```
 3. Start the Flask server:
    ```bash
-   flask run --port=5001
+   python app.py
    ```
 
 ---
