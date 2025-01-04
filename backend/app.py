@@ -7,13 +7,22 @@ from flask_cors import CORS
 import random
 import os
 from build_database.build_vector_db import build # just this line will build the lance db
+from test import get_random_products, get_product_from_id, get_top_n_products
+import json
+
+
+file_path = './data.json'
+
+# Read the JSON file
+with open(file_path, 'r') as file:
+    data = json.load(file)
 
 # Initialize Flask app
 app = Flask(__name__)
 print("Building LanceDB...")
 build()
 # Connect to LanceDB
-db = lancedb.connect("./general_store_db")
+# db = lancedb.connect("./general_store_db")
 
    
 
@@ -25,6 +34,7 @@ display_ascii_art()
 def query():
     # db = lancedb.connect("./general_store_db")
     try:
+        return jsonify({"message": "Query endpoint is working"}), 200
         # Get the JSON input from the request
         user_input = request.json.get('query', '')
         if not user_input:
@@ -41,7 +51,8 @@ def query():
                 "name":row['name'],
                 "description":row['description'],
                 "quantity":row['quantity'],
-                "availability":row['availability']
+                "availability":row['availability'],
+                "vector": row['vector']
             }
             ret_val.append(obj)
         return jsonify(ret_val), 200
@@ -59,6 +70,7 @@ def row_to_product(row, table_name) -> dict:
                 "quantity":row['quantity'],
                 "availability":row['availability'],
                 "category":table_name,
+                "vector": row['vector'].tolist()
             }
     return obj
 
@@ -83,22 +95,14 @@ def get_item_from_table(table_name, id, db) -> dict | None:
 
 @app.route('/product/<product_id>', methods=['GET'])
 def get_product_by_id(product_id):
-    print('opening db')
-    # db = lancedb.connect("./general_store_db")
+    product_id = int(product_id)
     try:
-        # Get all table names in the database
-        print('entered')
-        table_names = db.table_names()
-        print('table_names',table_names)
-        for name in table_names:
-            product = get_item_from_table(name, product_id, db)
-            if product:
-                return jsonify(product), 200
-        raise ValueError(f'Item with id {product_id} not found in these tables: {table_names}')
+        product = get_product_from_id(product_id,data)
+        return jsonify(product), 200
 
     except Exception as e:
-        print('error',e)
         return jsonify({"error": str(e)}), 500
+  
 
 
 
@@ -131,19 +135,25 @@ def test():
 @app.route('/products', methods=['GET'])
 def get_all_products():
     try:
-        all_products = []
-        # Get all table names in the database
-        table_names = db.table_names()
-        for name in table_names:
-            table = db.open_table(name)
-            df = table.to_pandas()
-            for _, row in df.iterrows():
-                product = row_to_product(row, name)
-                all_products.append(product)
+        all_products = get_random_products(data, 25)
         return jsonify(all_products), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    # try:
+    #     all_products = []
+    #     # Get all table names in the database
+    #     table_names = db.table_names()
+    #     for name in table_names:
+    #         table = db.open_table(name)
+    #         df = table.to_pandas()
+    #         for _, row in df.iterrows():
+    #             product = row_to_product(row, name)
+    #             all_products.append(product)
+    #     return jsonify(all_products), 200
+
+    # except Exception as e:
+    #     return jsonify({"error": str(e)}), 500
 # Run the Flask app
 if __name__ == "__main__":
     # Run the Flask app
