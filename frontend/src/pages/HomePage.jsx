@@ -33,10 +33,17 @@ export default function HomePage() {
       {/* this will be the ai text box */}
 
       {/* organized as a column */}
-    <CartButton/>
+    
       <div className="ai-title">
-
-        <h2>What can our SmartCart help you find today?</h2>
+        <div className="top-row">
+          {/* <div className="left-side"></div> */}
+          <div className="middle">
+          <h2>What can our SmartCart help you find today?</h2>
+          </div>
+          {/* <div className="right-side"><CartButton/></div> */}
+        </div>
+      
+        
         <textarea
           name=""
           id=""
@@ -50,14 +57,18 @@ export default function HomePage() {
         </div>
 
       </div>
-  <div className="bottom"></div>
+  <div className="bottom">
+    <div className='spinner-container'>
   {isLoading && <Spinner/>}
+  
+</div>
       {/* this will be the relevant products */}
       {products && <div className="product-container">
         {products.map((product, index) => (
           <ProductCard key={index} product={product} className="card" />
         ))}
       </div>}
+      </div>
 
     </div>
   </>

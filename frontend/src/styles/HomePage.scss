@@ -6,11 +6,21 @@
     align-items: center;
     // justify-content: center;
   }
-  
+  .top-row{
+    display: flex;
+
+  }
   .left-side,
   .right-side {
-    flex: 2;
-    border: 1px solid black;
+    flex: 1;
+    // border: 1px solid black;
+    text-align: right;
+    // padding: 1rem;
+    padding-right: 1rem;
+  }
+  .right-side{
+    align-items: flex-start;
+    justify-content: flex-end;
   }
   
   .middle {
@@ -42,15 +52,16 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     resize: none;
-    text-align: center;
-
+    text-align: center
   }
   
   .instructions{
-    margin-top: 1rem;
+    margin-top: 2rem;
     display: inline-block;
     text-align: center;
     width: 35%;
+    min-width: 400px;
+    max-width: 90vw;
   }
 
   .product-container{
@@ -59,4 +70,12 @@
     .card{
         max-width: 50%;
     }
+  }
+
+  .bottom{
+    margin-top: 2rem;
+  }
+
+  .spinner-container{
+    text-align: center;
   }

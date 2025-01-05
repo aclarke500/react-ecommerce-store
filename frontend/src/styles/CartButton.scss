@@ -3,12 +3,26 @@
     display: inline-block;
     width: 50px; /* Adjust as needed */
     height: 50px; /* Adjust as needed */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    border-radius: 10px; /* Rounded corners on hover */
+    padding: 8px;
   }
   
   .cart-button-container img {
     width: 100%;
     height: auto;
+    // margin: 4px;
   }
+  
+  .cart-button-container:hover {
+    background-color: grey; /* Grey background on hover */
+    transition: all 0.3s ease; /* Smooth transition effect */
+  }
+.cart-button-container:active {
+    background-color: darkgrey; /* Darker grey background on mouse down */
+    transform: scale(0.95); /* Slightly shrink the button on mouse down */
+    transition: all 0.1s ease; /* Faster transition effect */
+}
   
   .item-count {
     position: absolute;
