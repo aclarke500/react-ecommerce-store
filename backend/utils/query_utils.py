@@ -65,7 +65,7 @@ def query_db(query: dict) -> pd.DataFrame:
     """
     table_name = get_department(query)
     query_vector = embed_query_description(query)
-    ids = get_top_n_products(query_vector, table_name)
+    ids = get_top_n_products(query_vector, table_name, 50)
     results = get_products_from_id_list(ids)
     return results
 
