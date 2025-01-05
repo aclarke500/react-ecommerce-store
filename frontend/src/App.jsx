@@ -13,12 +13,6 @@ function App() {
     <CartProvider>
     <ProductProvider>
       <Router>
-        <div className="navbar">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/ai-assistant" className="nav-link">AI Assistant</Link>
-          <Link to="/shop" className="nav-link">Shop</Link>
-          <Link to="/cart" className="nav-link">Cart</Link>
-        </div>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop/:table_name?" element={<ShopPage />} />
