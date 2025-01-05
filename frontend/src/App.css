@@ -1,3 +1,7 @@
+p, h1,h2,h3,h4{
+  color: #f4f4f4;
+}
+
 /* Navbar container */
 .navbar {
   position: fixed;
@@ -48,11 +52,7 @@
   /* Keep text white */
 }
 
-/* Add some top margin for the content below the navbar */
-body {
-  margin-top: 4rem;
-  /* Adjust this if the navbar height changes */
-}
+
 
 
 /* Product Container */
