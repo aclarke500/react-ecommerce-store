@@ -1,47 +1,43 @@
 import React, { createContext, useState, useContext } from 'react';
 
 export const CartContext = createContext();
+
 export const useCart = () => useContext(CartContext);
+
 export function CartProvider({ children }) {
-    const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
-    const addToCart = (product) => {
-        setProducts((prevProducts) => {
-            const existingProductIndex = prevProducts.findIndex((item) => item.id === product.id);
+  const addToCart = (product) => {
+    setProducts((prevProducts) => {
+      const newProducts = [...prevProducts];
+      product.vector = null
+      newProducts.push(product);
+      console.log(products)
+      return newProducts;
 
-            if (existingProductIndex !== -1) {
-                const updatedProducts = [...prevProducts];
-                updatedProducts[existingProductIndex].quantity += 1;
-                return updatedProducts;
-            } else {
-                return [...prevProducts, { ...product, quantity: 1 }];
-            }
-        });
-    };
+    });
+  };
 
-    const removeFromCart = (productId) => {
-        setProducts((prevProducts) => {
-            const existingProductIndex = prevProducts.findIndex((item) => item.id === productId);
+  const removeFromCart = (productId) => {
+    setProducts((prevProducts) => {
+      const newProducts = [];
+      let foundProduct = false;
 
-            if (existingProductIndex !== -1) {
-                const updatedProducts = [...prevProducts];
-                const existingProduct = updatedProducts[existingProductIndex];
+      prevProducts.forEach((product) => {
+        if (product.id === productId && !foundProduct) {
+          foundProduct = true; // Skip this product only once
+        } else {
+          newProducts.push(product); // Keep other products
+        }
+      });
 
-                if (existingProduct.quantity > 1) {
-                    updatedProducts[existingProductIndex].quantity -= 1;
-                    return updatedProducts;
-                } else {
-                    return updatedProducts.filter((item) => item.id !== productId);
-                }
-            }
+      return newProducts;
+    });
+  };
 
-            return prevProducts;
-        });
-    };
-
-    return (
-        <CartContext.Provider value={{ products, setProducts, addToCart, removeFromCart }}>
-            {children}
-        </CartContext.Provider>
-    );
+  return (
+    <CartContext.Provider value={{ products, setProducts, addToCart, removeFromCart }}>
+      {children}
+    </CartContext.Provider>
+  );
 }
