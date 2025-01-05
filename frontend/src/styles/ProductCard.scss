@@ -37,17 +37,19 @@
 
         .name {
             font-size: 2rem;
-            margin-left: 2px;
+            margin-left: 1rem;
             margin-top: 8px;
             align-self: flex-start;
+            text-align: left;
         }
         .description{
             font-size: 6px;
         }
         .price {
             align-self: flex-end;
-            font-size: 20px;
-            color: #736f6f;
+            font-size: 22px;
+            color: #b4b4b4;
+            margin-right: 1rem;
         }
         
     }
