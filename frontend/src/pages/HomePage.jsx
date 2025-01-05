@@ -1,39 +1,75 @@
 import '../styles/HomePage.scss';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { queryRAG } from '../backend/rag';
+import Spinner from '../components/Spinner';
+import ProductCard from '../components/ProductCard';
+import CartButton from '../components/CartButton';
 
 export default function HomePage() {
-  const categories = [
-    { name: 'Food and Produce', description: 'Fresh and organic food items', tableName:'food' },
-    { name: 'Electronics and Technology', description: 'Latest gadgets and devices', tableName:'electronics' },
-    { name: 'Pet Supplies', description: 'Everything your pet needs' , tableName:'pet_supplies'}
-  ];
-    // const categories = ['Food and Produce', 'Electronics and Technology', 'Pet Supplies'];
-  const navigate = useNavigate();
-  const open = (category)=>{
-      navigate(`/shop/${category.tableName}`)
-  }
-  const openAiPage = ()=>{
-      navigate('/ai-assistant/');
-  }
+  const [userSearchQuery, setUserSearchQuery] = useState("");
+  const [products, setProducts] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-    return <div className="home-page">
-      <div className="welcome-cell">
-      <div className='home-title'>Welcome to Shop Cart AI</div>
-      <img src="logo.png" alt="egg" />
-      </div>
 
-      <div className="category-container">
-        <p className='category-title'>Check out our different categories or try out our <br/><u className='ai-link' onClick={()=>openAiPage()}><strong><span>AI Assistant</span></strong></u></p>
-        <div className="category-row">
-        {categories.map((category, index) => (
-          <div key={index} className="category" onClick={()=>open(category)}>
-            <div className="name">{category.name}</div>
-            
+  // functions for updating state
+  const getItems = async () => {
+    setIsLoading(true);
+    const response = await queryRAG(userSearchQuery);
+    setProducts(response);
+    setIsLoading(false);
+
+  }
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      getItems();
+    }
+  };
+
+  return <>
+    <div className="home-page">
+      {/* this will be nothing */}
+
+      {/* this will be the ai text box */}
+
+      {/* organized as a column */}
+    
+      <div className="ai-title">
+        <div className="top-row">
+          {/* <div className="left-side"></div> */}
+          <div className="middle">
+          <h2>What can our SmartCart help you find today?</h2>
           </div>
-        ))}
-    </div>
-      </div>
+          {/* <div className="right-side"><CartButton/></div> */}
+        </div>
       
-    </div>
-  }
+        
+        <textarea
+          name=""
+          id=""
+          // placeholder='Enter to start searching!'
+          value={userSearchQuery}
+          onChange={(e) => setUserSearchQuery(e.target.value)}
+          onKeyDown={e => handleKeyDown(e)}
+        ></textarea>
+        <div className='instructions'>
+          Describe what you're looking for in detail—whether it's specific, broad, or lengthy. Our AI will analyze your input and recommend the best products tailored just for you.
+        </div>
+
+      </div>
+  <div className="bottom">
+    <div className='spinner-container'>
+  {isLoading && <Spinner/>}
   
+</div>
+      {/* this will be the relevant products */}
+      {products && <div className="product-container">
+        {products.map((product, index) => (
+          <ProductCard key={index} product={product} className="card" />
+        ))}
+      </div>}
+      </div>
+
+    </div>
+  </>
+}
