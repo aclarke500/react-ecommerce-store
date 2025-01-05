@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useCart } from "../store/CartContext";
 import { useState, useEffect } from "react";
+import CartButton from "../components/CartButton";
 import Spinner from '../components/Spinner'
 import "../styles/ProductDetailsPage.scss";
 import { getProductFromId, getProductImageFromId } from "../backend/product";
@@ -45,18 +46,10 @@ export default function ProductDetailsPage() {
         fetchImage();
     }, [id]);
 
-    const maxQuantity = Math.min(5, product.stock);
-    const [selectedQuantity, setSelectedQuantity] = useState(1);
-    const getProductWithQuantity = () => {
-        return {
-            ...product,
-            quantity: selectedQuantity,
-        };
-    };
-
 
     return <>
-
+    <div className="cart-btn-container"><CartButton/></div>
+        
         {isLoading && <div className="product-spinner-container">
             <Spinner className="spinner" />
             <h3>Fetching your product from our database...</h3>
@@ -77,7 +70,7 @@ export default function ProductDetailsPage() {
 
                     <button
                         className="add-to-cart-button"
-                        onClick={() => addToCart(getProductWithQuantity())}
+                        onClick={() => addToCart(product)}
                     >
                         Add to Cart 🛒
                     </button>
@@ -86,7 +79,6 @@ export default function ProductDetailsPage() {
                     <p>{product.description}</p>
                     <p>Stock: {product.quantity}</p>
                     <p>Category: {product.category}</p>
-                    {product.rating && <p>Rating: {product.rating} ⭐</p>}
                 </div>
             </div>
         </div >

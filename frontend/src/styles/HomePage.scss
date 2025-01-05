@@ -41,14 +41,15 @@
 
   }
   
-  .ai-title textarea {
+  .ai-title textarea, input {
     display: flex;
     margin: 0 auto; /* Center horizontally */
-    margin-top: 2rem; /* Space below the title */
-    width: 60%; /* Adjust width as needed */
+    margin-top: 1rem; /* Space below the title */
+    width: 30%; /* Adjust width as needed */
+    min-width: 350px;
     height: 3rem; /* Adjust height as needed */
     font-size: 1rem; /* Adjust text size */
-    padding: 1rem;
+    // padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     resize: none;

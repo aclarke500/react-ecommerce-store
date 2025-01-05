@@ -36,24 +36,25 @@ export default function HomePage() {
     
       <div className="ai-title">
         <div className="top-row">
-          {/* <div className="left-side"></div> */}
+          <div className="left-side"></div>
           <div className="middle">
           <h2>What can our SmartCart help you find today?</h2>
           </div>
-          {/* <div className="right-side"><CartButton/></div> */}
+          <div className="right-side"><CartButton/></div>
         </div>
       
         
-        <textarea
+        <input
           name=""
           id=""
           // placeholder='Enter to start searching!'
           value={userSearchQuery}
           onChange={(e) => setUserSearchQuery(e.target.value)}
           onKeyDown={e => handleKeyDown(e)}
-        ></textarea>
+        ></input>
         <div className='instructions'>
           Describe what you're looking for in detail—whether it's specific, broad, or lengthy. Our AI will analyze your input and recommend the best products tailored just for you.
+          <br/> We currently offer food, electronics, and pet supplies.
         </div>
 
       </div>
