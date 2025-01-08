@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../store/CartContext";
 import { useState, useEffect } from "react";
 import CartButton from "../components/CartButton";
@@ -8,6 +8,7 @@ import { getProductFromId, getProductImageFromId } from "../backend/product";
 
 
 export default function ProductDetailsPage() {
+    const navigate = useNavigate();
     const { id } = useParams(); // Extract the 'id' parameter
     const { addToCart } = useCart();
     const [product, setProduct] = useState(false);
@@ -15,7 +16,9 @@ export default function ProductDetailsPage() {
     const [imageSrc, setImageSrc] = useState(null);
 
 
-
+    const search = () => {
+        navigate('/'); // Replace '/new-url' with your target path
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -48,8 +51,15 @@ export default function ProductDetailsPage() {
 
 
     return <>
-    <div className="cart-btn-container"><CartButton/></div>
-        
+
+        <div className="cart-btn-container">
+            <div className="empty-space"></div>
+            <div className="cart-button-container" id='search' onClick={search}>
+                <i className="fa-solid fa-magnifying-glass item" ></i>
+            </div>
+            <CartButton className="shopping-cart item" />
+        </div>
+
         {isLoading && <div className="product-spinner-container">
             <Spinner className="spinner" />
             <h3>Fetching your product from our database...</h3>
