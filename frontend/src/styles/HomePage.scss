@@ -31,6 +31,11 @@
     align-items: center;
     position: relative;
   }
+  @media (min-width: 1200px) {
+    .middle{
+      margin-top: 3rem;
+    }
+  }
   
   .ai-title {
     margin-top: 1rem;
@@ -79,4 +84,34 @@
 
   .spinner-container{
     text-align: center;
+  }
+
+  #submit-button{
+    margin: 3rem;
+    transition: background-color 0.3s ease;
+    &:hover{
+      background-color: #656565;
+      border: 1px solid black;
+    }
+    &:active {
+      background-color: #454545;
+      border: 1px solid black;
+    }
+  }
+
+  .slow{
+    max-width: 50%;
+  }
+
+  .slow-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #coffee-pic{
+    width: 2%;
+    min-width: 3rem;
+    margin: 2rem;
   }

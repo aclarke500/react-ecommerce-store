@@ -134,7 +134,26 @@
       width: 100%; /* Full width button for better touch usability */
     }
   }
+  .cart-btn-container {
+    display: flex; /* Ensures items are aligned in a row */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: flex-end; /* Align all items to the right */
+    gap: 10px; /* Add space between the items */
   
-  .cart-btn-container{
-    text-align: right;
+    .empty-space {
+      flex-grow: 1; /* Fills the remaining space */
+    }
+  
+    .item {
+      flex-shrink: 0; /* Prevents items from shrinking */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
+  
+#search{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
